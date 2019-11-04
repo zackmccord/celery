@@ -13,6 +13,7 @@ stages:
   - test
   - integration
   - lint
+  - integration-full
 env:
   global:
   - PYTHONUNBUFFERED=yes
@@ -41,6 +42,86 @@ matrix:
   - python: 3.8
     env: MATRIX_TOXENV=integration-cache
     stage: integration
+
+  - python: 3.7
+    env: MATRIX_TOXENV=integration-rabbitmq
+    stage: integration-full
+
+  - python: 3.7
+    env: MATRIX_TOXENV=integration-redis
+    stage: integration-full
+
+  - python: 3.7
+    env: MATRIX_TOXENV=integration-dynamodb
+    stage: integration-full
+
+  - python: 3.7
+    env: MATRIX_TOXENV=integration-azureblockblob
+    stage: integration-full
+
+  - python: 3.7
+    env: MATRIX_TOXENV=integration-cache
+    stage: integration-full
+
+  - python: 3.6
+    env: MATRIX_TOXENV=integration-rabbitmq
+    stage: integration-full
+
+  - python: 3.6
+    env: MATRIX_TOXENV=integration-redis
+    stage: integration-full
+
+  - python: 3.6
+    env: MATRIX_TOXENV=integration-dynamodb
+    stage: integration-full
+
+  - python: 3.6
+    env: MATRIX_TOXENV=integration-azureblockblob
+    stage: integration-full
+
+  - python: 3.6
+    env: MATRIX_TOXENV=integration-cache
+    stage: integration-full
+
+  - python: 3.5
+    env: MATRIX_TOXENV=integration-rabbitmq
+    stage: integration-full
+
+  - python: 3.5
+    env: MATRIX_TOXENV=integration-redis
+    stage: integration-full
+
+  - python: 3.5
+    env: MATRIX_TOXENV=integration-dynamodb
+    stage: integration-full
+
+  - python: 3.5
+    env: MATRIX_TOXENV=integration-azureblockblob
+    stage: integration-full
+
+  - python: 3.5
+    env: MATRIX_TOXENV=integration-cache
+    stage: integration-full
+
+  - python: 2.7
+    env: MATRIX_TOXENV=integration-rabbitmq
+    stage: integration-full
+
+  - python: 2.7
+    env: MATRIX_TOXENV=integration-redis
+    stage: integration-full
+
+  - python: 2.7
+    env: MATRIX_TOXENV=integration-dynamodb
+    stage: integration-full
+
+  - python: 2.7
+    env: MATRIX_TOXENV=integration-azureblockblob
+    stage: integration-full
+
+  - python: 2.7
+    env: MATRIX_TOXENV=integration-cache
+    stage: integration-full
 
   - python: '3.8'
     env: TOXENV=flake8
