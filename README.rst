@@ -73,7 +73,8 @@ an older version of Celery:
 
 - Python 2.6: Celery series 3.1 or earlier.
 - Python 2.5: Celery series 3.0 or earlier.
-- Python 2.4 was Celery series 2.2 or earlier.
+- Python 2.4: Celery series 2.2 or earlier.
+- Python 2.7: Celery 4.x series.
 
 Celery is a project with minimal funding,
 so we don't support Microsoft Windows.
@@ -520,7 +521,7 @@ file in the top distribution directory for the full license text.
     :target: https://pypi.org/project/celery/
 
 .. |pyimp| image:: https://img.shields.io/pypi/implementation/celery.svg
-    :alt: Support Python implementations.
+    :alt: Supported Python implementations.
     :target: https://pypi.org/project/celery/
 
 .. |ocbackerbadge| image:: https://opencollective.com/celery/backers/badge.svg
