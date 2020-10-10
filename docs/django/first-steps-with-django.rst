@@ -97,6 +97,18 @@ setting becomes ``CELERY_BROKER_URL``. This also applies to the
 workers settings, for instance, the :setting:`worker_concurrency`
 setting becomes ``CELERY_WORKER_CONCURRENCY``.
 
+For example, a Django project's configuration file might include:
+
+.. code-block:: python
+    :caption: settings.py
+
+    ...
+
+    # Celery Configuration Options
+    CELERY_TIMEZONE = "Australia/Tasmania"
+    CELERY_TASK_TRACK_STARTED = True
+    CELERY_TASK_TIME_LIMIT = 30 * 60
+
 You can pass the settings object directly instead, but using a string
 is better since then the worker doesn't have to serialize the object.
 The ``CELERY_`` namespace is also optional, but recommended (to
