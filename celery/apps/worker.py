@@ -144,6 +144,25 @@ class Worker(WorkController):
         if not self._custom_logging and self.redirect_stdouts:
             app.log.redirect_stdouts(self.redirect_stdouts_level)
 
+        # TODO: Remove the following code in Celery 6.0
+        # This qualifies as a hack for issue #6366.
+        warn_deprecated = True
+        config_source = app._config_source
+        if isinstance(config_source, str):
+            # Don't raise the warning when the settings originate from
+            # django.conf:settings
+            warn_deprecated = config_source.lower() not in [
+                'django.conf:settings',
+            ]
+
+        if warn_deprecated:
+            if app.conf.maybe_warn_deprecated_settings():
+                logger.warning(
+                    "Please run `celery upgrade settings path/to/settings.py` "
+                    "to avoid these warnings and to allow a smoother upgrade "
+                    "to Celery 6.0."
+                )
+
     def emit_banner(self):
         # Dump configuration to screen so we have some basic information
         # for when users sends bug reports.
