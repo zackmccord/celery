@@ -560,9 +560,9 @@ def _signal_internal_error(task, uuid, args, kwargs, request, exc):
         del tb
 
 
-def _trace_task_ret(name, uuid, request, body, content_type,
-                    content_encoding, loads=loads_message, app=None,
-                    **extra_request):
+def trace_task_ret(name, uuid, request, body, content_type,
+                   content_encoding, loads=loads_message, app=None,
+                   **extra_request):
     app = app or current_app._get_current_object()
     embed = None
     if content_type:
@@ -582,12 +582,9 @@ def _trace_task_ret(name, uuid, request, body, content_type,
     return (1, R, T) if I else (0, Rstr, T)
 
 
-trace_task_ret = _trace_task_ret  # noqa: E305
-
-
-def _fast_trace_task(task, uuid, request, body, content_type,
-                     content_encoding, loads=loads_message, _loc=None,
-                     hostname=None, **_):
+def fast_trace_task(task, uuid, request, body, content_type,
+                    content_encoding, loads=loads_message, _loc=None,
+                    hostname=None, **_):
     _loc = _localized if not _loc else _loc
     embed = None
     tasks, accept, hostname = _loc
@@ -622,8 +619,6 @@ def report_internal_error(task, exc):
 
 def setup_worker_optimizations(app, hostname=None):
     """Setup worker related optimizations."""
-    global trace_task_ret
-
     hostname = hostname or gethostname()
 
     # make sure custom Task.__call__ methods that calls super
@@ -649,16 +644,11 @@ def setup_worker_optimizations(app, hostname=None):
         hostname,
     ]
 
-    trace_task_ret = _fast_trace_task
-    from celery.worker import request as request_module
-    request_module.trace_task_ret = _fast_trace_task
-    request_module.__optimize__()
+    app.use_fast_trace_task = True
 
 
-def reset_worker_optimizations():
+def reset_worker_optimizations(app=current_app):
     """Reset previously configured optimizations."""
-    global trace_task_ret
-    trace_task_ret = _trace_task_ret
     try:
         delattr(BaseTask, '_stackprotected')
     except AttributeError:
@@ -667,8 +657,7 @@ def reset_worker_optimizations():
         BaseTask.__call__ = _patched.pop('BaseTask.__call__')
     except KeyError:
         pass
-    from celery.worker import request as request_module
-    request_module.trace_task_ret = _trace_task_ret
+    app.use_fast_trace_task = False
 
 
 def _install_stack_protection():
