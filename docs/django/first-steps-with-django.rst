@@ -53,8 +53,8 @@ Note that this example project layout is suitable for larger projects,
 for simple projects you may use a single contained module that defines
 both the app and tasks, like in the :ref:`tut-celery` tutorial.
 
-Let's break down what happens in the first module,
-first, we set the default :envvar:`DJANGO_SETTINGS_MODULE` environment
+Let's break down what happens in the first module.
+First, we set the default :envvar:`DJANGO_SETTINGS_MODULE` environment
 variable for the :program:`celery` command-line program:
 
 .. code-block:: python
@@ -69,13 +69,13 @@ creating the app instances, as is what we do next:
 
     app = Celery('proj')
 
-This is our instance of the library, you can have many instances
+This is our instance of the library; you can have many instances,
 but there's probably no reason for that when using Django.
 
 We also add the Django settings module as a configuration source
-for Celery. This means that you don't have to use multiple
-configuration files, and instead configure Celery directly
-from the Django settings; but you can also separate them if wanted.
+for Celery. This lets you configure Celery directly from the Django
+settings instead of using multiple configuration files, though you
+can still separate them if wanted.
 
 .. code-block:: python
 
@@ -83,11 +83,11 @@ from the Django settings; but you can also separate them if wanted.
 
 The uppercase name-space means that all
 :ref:`Celery configuration options <configuration>`
-must be specified in uppercase instead of lowercase, and start with
-``CELERY_``, so for example the :setting:`task_always_eager` setting
+must be specified in uppercase instead of lowercase and start with
+``CELERY_``. For example, the :setting:`task_always_eager` setting
 becomes ``CELERY_TASK_ALWAYS_EAGER``, and the :setting:`broker_url`
 setting becomes ``CELERY_BROKER_URL``. This also applies to the
-workers settings, for instance, the :setting:`worker_concurrency`
+workers settings; for instance, the :setting:`worker_concurrency`
 setting becomes ``CELERY_WORKER_CONCURRENCY``.
 
 For example, a Django project's configuration file might include:
@@ -173,7 +173,9 @@ To use this with your project you need to follow these steps:
         $ pip install django-celery-results
 
 #. Add ``django_celery_results`` to ``INSTALLED_APPS`` in your
-   Django project's :file:`settings.py`::
+   Django project's :file:`settings.py` :
+
+    .. code-block:: python
 
         INSTALLED_APPS = (
             ...,
